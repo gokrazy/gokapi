@@ -1,0 +1,136 @@
+---
+swagger: "2.0"
+info:
+  description: "OpenAPI for the gokrazy on-device API"
+  version: "1.4.0"
+  title: "gokrazy on-device API"
+  contact:
+    email: "michael+gokrazy@stapelberg.ch"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "gokrazy"
+basePath: "/"
+tags:
+- name: "supervise"
+  description: "Process supervision"
+- name: "update"
+  description: "Update"
+schemes:
+- "http"
+paths:
+  /:
+    get:
+      tags:
+      - "supervise"
+      summary: "Index"
+      description: "TODO: description"
+      operationId: "index"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "All search results"
+          schema:
+            $ref: "#/definitions/IndexResult"
+  /status:
+    get:
+      tags:
+      - "supervise"
+      summary: "Status"
+      description: "TODO: description"
+      operationId: "status"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "path"
+        in: "query"
+        description: "path to the service"
+        required: true
+        type: "string"
+        x-exportParamName: "Path"
+      responses:
+        "200":
+          description: "service status"
+          schema:
+            $ref: "#/definitions/Service"
+definitions:
+  Service:
+    type: "object"
+    properties:
+      Path:
+        type: "string"
+        example: "/user/tailscaled"
+        description: "Path to the service program"
+      Args:
+        type: "array"
+        example:
+        - "/user/tailscaled"
+        - "--statedir=/perm/tailscaled/"
+        description: "Command-line arguments with which to start the service"
+        items:
+          type: "string"
+      Diverted:
+        type: "string"
+        description: "TODO"
+      Stopped:
+        type: "boolean"
+        example: true
+        description: "Whether the service is stopped (gokrazy will not attempt to\
+          \ start it) or supervised"
+      StartTime:
+        type: "string"
+        example: "2024-09-30T07:21:51.199410684+02:00"
+        description: "TODO"
+    example:
+      Path: "/user/tailscaled"
+      Args:
+      - "/user/tailscaled"
+      - "--statedir=/perm/tailscaled/"
+      Stopped: true
+      StartTime: "2024-09-30T07:21:51.199410684+02:00"
+      Diverted: "Diverted"
+  IndexResult:
+    type: "object"
+    properties:
+      Kernel:
+        type: "string"
+        example: "Linux 6.6.28-v8 (aarch64)"
+        description: "The Linux kernel version"
+      Model:
+        type: "string"
+        example: "Raspberry Pi 5 Model B Rev 1.0"
+        description: "Model name of the machine on which gokrazy is running"
+      Services:
+        type: "array"
+        description: "running services"
+        items:
+          $ref: "#/definitions/Service"
+    description: "index of what is supervised"
+    example:
+      Services:
+      - Path: "/user/tailscaled"
+        Args:
+        - "/user/tailscaled"
+        - "--statedir=/perm/tailscaled/"
+        Stopped: true
+        StartTime: "2024-09-30T07:21:51.199410684+02:00"
+        Diverted: "Diverted"
+      - Path: "/user/tailscaled"
+        Args:
+        - "/user/tailscaled"
+        - "--statedir=/perm/tailscaled/"
+        Stopped: true
+        StartTime: "2024-09-30T07:21:51.199410684+02:00"
+        Diverted: "Diverted"
+      Model: "Raspberry Pi 5 Model B Rev 1.0"
+      Kernel: "Linux 6.6.28-v8 (aarch64)"
+parameters:
+  pathParam:
+    name: "path"
+    in: "query"
+    description: "path to the service"
+    required: true
+    type: "string"
+    x-exportParamName: "Path"
