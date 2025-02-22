@@ -1,6 +1,6 @@
 module github.com/gokrazy/gokapi
 
-go 1.21
+go 1.24
 
 require (
 	github.com/antihax/optional v1.0.0
