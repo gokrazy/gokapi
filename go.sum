@@ -1,7 +1,7 @@
 github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
-github.com/gokrazy/internal v0.0.0-20240827190026-6ab9fef83042 h1:pGQOpKqneYGmTHKkKvCdfPmnFXlV6LA4c7FRlO/bBsk=
-github.com/gokrazy/internal v0.0.0-20240827190026-6ab9fef83042/go.mod h1:t3ZirVhcs9bH+fPAJuGh51rzT7sVCZ9yfXvszf0ZjF0=
+github.com/gokrazy/internal v0.0.0-20250214203001-b1610a6e7271 h1:CG2P/McW77phMh+iUSsGweJd4VwGhGS4UQJ92gV7Ihg=
+github.com/gokrazy/internal v0.0.0-20250214203001-b1610a6e7271/go.mod h1:vvnvmAv/38qDCHJ9b6Bq7yvUap6DcGtjZWjGuv/RA1k=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
