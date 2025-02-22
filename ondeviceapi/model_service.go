@@ -21,4 +21,6 @@ type Service struct {
 	Stopped bool `json:"Stopped,omitempty"`
 	// TODO
 	StartTime string `json:"StartTime,omitempty"`
+	// Linux process id (pid) of the service
+	Pid int32 `json:"Pid,omitempty"`
 }
