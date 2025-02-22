@@ -23,6 +23,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *SuperviseApi* | [**Index**](docs/SuperviseApi.md#index) | **Get** / | Index
 *SuperviseApi* | [**Status**](docs/SuperviseApi.md#status) | **Get** /status | Status
+*UpdateApi* | [**Reboot**](docs/UpdateApi.md#reboot) | **Post** /reboot | Reboot the device
 
 
 ## Documentation For Models

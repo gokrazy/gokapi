@@ -47,6 +47,8 @@ type APIClient struct {
 	// API Services
 
 	SuperviseApi *SuperviseApiService
+
+	UpdateApi *UpdateApiService
 }
 
 type service struct {
@@ -66,6 +68,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.SuperviseApi = (*SuperviseApiService)(&c.common)
+	c.UpdateApi = (*UpdateApiService)(&c.common)
 
 	return c
 }
