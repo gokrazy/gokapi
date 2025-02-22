@@ -21,7 +21,7 @@ func ConnectOnDevice() (*ondeviceapi.Configuration, error) {
 	}
 	cfg := ondeviceapi.NewConfiguration()
 	auth := "gokrazy:" + strings.TrimSpace(string(pw))
-	cfg.BasePath = "http://" + auth + "@unix/"
+	cfg.BasePath = "http://" + auth + "@unix"
 
 	// Use the Unix domain socket if available.
 	if conn, err := net.Dial("unix", gokrazyUnixSocket); err == nil {
@@ -42,6 +42,6 @@ func ConnectOnDevice() (*ondeviceapi.Configuration, error) {
 	if err != nil {
 		return nil, err
 	}
-	cfg.BasePath = "http://" + auth + "@localhost:" + strings.TrimSpace(string(port)) + "/"
+	cfg.BasePath = "http://" + auth + "@localhost:" + strings.TrimSpace(string(port))
 	return cfg, nil
 }
