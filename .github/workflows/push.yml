@@ -1,0 +1,26 @@
+name: Push
+
+on:
+  push:
+
+jobs:
+
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up latest stable Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: 'stable'
+
+    - name: Ensure all files were formatted as per gofmt
+      run: |
+        [ "$(gofmt -l $(find . -name '*.go') 2>&1)" = "" ]
+
+    - name: Build and test
+      run: |
+        go install ./...
+        go test -v ./...
