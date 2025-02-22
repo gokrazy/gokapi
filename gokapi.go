@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"github.com/gokrazy/gokapi/ondeviceapi"
+	"github.com/gokrazy/internal/config"
+	"github.com/gokrazy/internal/updateflag"
 )
 
 // ConnectOnDevice is meant to be run from a program running on a gokrazy
@@ -44,4 +46,35 @@ func ConnectOnDevice() (*ondeviceapi.Configuration, error) {
 	}
 	cfg.BasePath = "http://" + auth + "@localhost:" + strings.TrimSpace(string(port))
 	return cfg, nil
+}
+
+// ConnectRemotely is meant to be run from a program running on any machine,
+// remotely connecting to the on-device API of a gokrazy instance.
+func ConnectRemotely(cfg *config.Struct) (*ondeviceapi.Configuration, error) {
+	// TODO: do not modify global state!
+	updateflag.SetUpdate("yes")
+
+	update, err := cfg.Update.WithFallbackToHostSpecific(cfg.Hostname)
+	if err != nil {
+		return nil, err
+	}
+
+	if update.HTTPPort == "" {
+		update.HTTPPort = "80"
+	}
+
+	if update.HTTPSPort == "" {
+		update.HTTPSPort = "443"
+	}
+
+	// TODO: support for TLS certificates
+	const schema = "http"
+	u, err := updateflag.BaseURL(update.HTTPPort, update.HTTPSPort, schema, update.Hostname, update.HTTPPassword)
+	if err != nil {
+		return nil, err
+	}
+
+	result := ondeviceapi.NewConfiguration()
+	result.BasePath = strings.TrimSuffix(u.String(), "/")
+	return result, nil
 }
