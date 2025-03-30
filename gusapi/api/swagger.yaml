@@ -7,7 +7,7 @@ info:
   license:
     name: BSD 3-clause revised license
     url: https://github.com/gokrazy/gus/blob/main/LICENSE
-  version: 1.4.0
+  version: 1.5.0
 servers:
 - url: https://gus.gokrazy.org/api/v1
 tags:
@@ -213,8 +213,9 @@ components:
       properties:
         machine_id_pattern:
           type: string
-          description: TODO
-          example: TODO
+          description: The regexp pattern (go regexp syntax) to match the machineIDs
+            to which apply the provided version. The most base case is a plain machine_id.
+          example: my-machine-id
         sbom_hash:
           $ref: '#/components/schemas/sbomHash'
         registry_type:
@@ -226,6 +227,13 @@ components:
           description: relative (localdisk registry) or absolute download link with
             which gokrazy devices can download the build
           example: /images/2023-02-21T20:27:45+01:00-1757853214/disk.gaf
+        ingestion_policy:
+          type: string
+          description: |-
+            the policy with which the version (sbom_hash) is set for the matching machine_id_pattern. At the moment these are the two possible values: - "" (empty string): this is the default value for this property. And it means the provided version (sbom_hash) is temporarily set for the matching machine_id_pattern.
+              when a new image is ingested for this matching pattern, the new image will become the new desired version for this matching pattern.
+            - "permanent": the provided version (sbom_hash) will stay the desired one for the matching machine_id_pattern until it gets explicitly unset/changed.
+          example: ""
     ingestResponse:
       title: ingestResponse
       type: object
@@ -274,3 +282,4 @@ components:
           description: Model
           example: Raspberry Pi Zero 2 W Rev 1.0
       description: TODO
+x-original-swagger-version: "2.0"
