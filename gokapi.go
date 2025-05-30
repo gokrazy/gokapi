@@ -18,7 +18,8 @@ func ConnectOnDevice() (*ondeviceapi.Configuration, error) {
 	const gokrazyUnixSocket = "/run/gokrazy-http.sock"
 
 	pw, err := os.ReadFile("/etc/gokr-pw.txt")
-	if err != nil {
+	pwErr := err // handled below
+	if err != nil && !os.IsNotExist(err) {
 		return nil, err
 	}
 	cfg := ondeviceapi.NewConfiguration()
@@ -37,6 +38,12 @@ func ConnectOnDevice() (*ondeviceapi.Configuration, error) {
 			},
 		}
 		return cfg, nil
+	}
+
+	// Connecting to the Unix domain socket failed. Now we need a password, so
+	// error out if /etc/gokr-pw.txt was not found.
+	if pwErr != nil {
+		return nil, pwErr
 	}
 
 	// Fallback to TCP.
