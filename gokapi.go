@@ -58,9 +58,6 @@ func ConnectOnDevice() (*ondeviceapi.Configuration, error) {
 // ConnectRemotely is meant to be run from a program running on any machine,
 // remotely connecting to the on-device API of a gokrazy instance.
 func ConnectRemotely(cfg *config.Struct) (*ondeviceapi.Configuration, error) {
-	// TODO: do not modify global state!
-	updateflag.SetUpdate("yes")
-
 	update, err := cfg.Update.WithFallbackToHostSpecific(cfg.Hostname)
 	if err != nil {
 		return nil, err
@@ -74,9 +71,11 @@ func ConnectRemotely(cfg *config.Struct) (*ondeviceapi.Configuration, error) {
 		update.HTTPSPort = "443"
 	}
 
-	// TODO: support for TLS certificates
-	const schema = "http"
-	u, err := updateflag.BaseURL(update.HTTPPort, update.HTTPSPort, schema, update.Hostname, update.HTTPPassword)
+	schema := "http"
+	if update.UseTLS == "self-signed" {
+		schema = "https"
+	}
+	u, err := updateflag.Value{Update: "yes"}.BaseURL(update.HTTPPort, update.HTTPSPort, schema, update.Hostname, update.HTTPPassword)
 	if err != nil {
 		return nil, err
 	}
